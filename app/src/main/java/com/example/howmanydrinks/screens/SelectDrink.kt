@@ -1,4 +1,4 @@
-package com.example.howmanydrinks
+package com.example.howmanydrinks.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.example.howmanydrinks.Drink
+import com.example.howmanydrinks.DrinkViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -73,9 +76,11 @@ fun SelectDrink(
     val drinkName by viewModel.drinkName.collectAsStateWithLifecycle()
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(Brush.verticalGradient(listOf(Color.LightGray,Color.White))),
         verticalArrangement = Arrangement.spacedBy(72.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "What's your drink ?",
@@ -99,12 +104,13 @@ fun SelectDrink(
             items(drinkList) {
                 Surface(
                     onClick = { viewModel.chooseDrink(it) },
-                    modifier.padding(4.dp)
+                    modifier.padding(4.dp),
+                    shape = MaterialTheme.shapes.large
                 ) {
                     Column(
                         modifier = modifier
                             .border(
-                                1.2.dp, color = it.color, shape = MaterialTheme.shapes.medium
+                                1.2.dp, color = it.color, shape = MaterialTheme.shapes.large
                             )
                             .padding(10.dp)
                             .background(if (it.selected) Color.Red else Color.White),
@@ -185,4 +191,5 @@ fun SelectDrink(
 @Preview(showBackground = true)
 @Composable
 fun PrevSelectDrink() {
+    SelectDrink(onContinueClicked = {})
 }
