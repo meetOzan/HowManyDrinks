@@ -16,6 +16,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,79 +35,27 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HowManyDrinksTheme {
-
+                MyApp()
             }
         }
     }
 }
 
 @Composable
-fun MainScreen(
+fun MyApp(
     modifier: Modifier = Modifier,
-    text: Int,
     viewModel: DrinkViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
-
-    val drinkMany by viewModel.number.collectAsStateWithLifecycle()
-
-    Surface(
-        modifier = modifier.fillMaxSize()
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row {
-                Text(
-                    text = drinkMany.toString(),
-                    color = Color.Black,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 72.sp,
-                    modifier = modifier.padding(vertical = 12.dp, horizontal = 4.dp)
-                )
-                Text(
-                    text = "/",
-                    color = Color.Black,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 72.sp,
-                    modifier = modifier.padding(vertical = 12.dp)
-                )
-                Text(
-                    text = text.toString(),
-                    color = Color.Black,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 72.sp,
-                    modifier = modifier.padding(vertical = 12.dp, horizontal = 4.dp)
-                )
-            }
-            ElevatedButton(
-                onClick = { viewModel.increaseDrink() },
-                colors = ButtonDefaults.elevatedButtonColors(
-                    Color.White
-                ),
-                border = BorderStroke(1.dp, color = Color.Black),
-                enabled = drinkMany < text,
-                modifier = modifier
-                    .width(180.dp)
-                    .padding(vertical = 24.dp)
-            ) {
-                Text(
-                    text = "Drink",
-                    color = Color.Black,
-                )
-            }
+
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    val drinkName by viewModel.drinkName.collectAsStateWithLifecycle()
+    val drinkGoal by viewModel.numberGoal.collectAsStateWithLifecycle()
+
+    Surface(modifier) {
+        if (!shouldShowOnboarding ) {
+            CountScreen()
+        } else {
+            SelectDrink(onContinueClicked = { if (drinkName.name != "" && drinkGoal != 0 ) shouldShowOnboarding = !shouldShowOnboarding})
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    HowManyDrinksTheme {
-        MainScreen(text = 3)
     }
 }

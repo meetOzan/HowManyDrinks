@@ -16,6 +16,9 @@ class DrinkViewModel() : ViewModel() {
     private var _drinkName = MutableStateFlow<Drink>(Drink("", Color.White,"",false))
     val drinkName = _drinkName.asStateFlow()
 
+    private var _isNext = MutableStateFlow(false)
+    val isNext = _isNext.asStateFlow()
+
     fun increaseDrink(){
         _number.value += 1
     }
@@ -30,6 +33,10 @@ class DrinkViewModel() : ViewModel() {
 
     fun chooseDrink(newDrink : Drink){
         _drinkName.value = newDrink
+    }
+
+    fun next(){
+        _isNext.value = !_isNext.value
     }
     
 }

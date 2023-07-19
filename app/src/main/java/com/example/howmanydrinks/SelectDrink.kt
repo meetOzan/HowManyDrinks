@@ -44,6 +44,7 @@ import coil.compose.AsyncImage
 @Composable
 fun SelectDrink(
     modifier: Modifier = Modifier,
+    onContinueClicked: () -> Unit,
     viewModel: DrinkViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
@@ -97,7 +98,8 @@ fun SelectDrink(
         ) {
             items(drinkList) {
                 Surface(
-                    onClick = { viewModel.chooseDrink(it) }, modifier.padding(4.dp)
+                    onClick = { viewModel.chooseDrink(it) },
+                    modifier.padding(4.dp)
                 ) {
                     Column(
                         modifier = modifier
@@ -162,7 +164,7 @@ fun SelectDrink(
                 }
             }
             ElevatedButton(
-                onClick = { viewModel.increaseDrink() },
+                onClick =  onContinueClicked ,
                 colors = ButtonDefaults.elevatedButtonColors(
                     Color.LightGray
                 ),
@@ -172,7 +174,7 @@ fun SelectDrink(
                     .padding(top = 36.dp)
             ) {
                 androidx.compose.material3.Text(
-                    text = "Next",
+                    text = "Continue",
                     color = Color.Black,
                 )
             }
@@ -183,5 +185,4 @@ fun SelectDrink(
 @Preview(showBackground = true)
 @Composable
 fun PrevSelectDrink() {
-    SelectDrink()
 }
