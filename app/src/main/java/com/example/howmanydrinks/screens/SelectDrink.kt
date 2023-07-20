@@ -73,7 +73,7 @@ fun SelectDrink(
     }
 
     val numberGoal by viewModel.numberGoal.collectAsStateWithLifecycle()
-    val drinkName by viewModel.drinkName.collectAsStateWithLifecycle()
+    val drinkName by viewModel.drink.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
