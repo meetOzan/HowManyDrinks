@@ -94,14 +94,32 @@ fun CountScreen(
         }
 
         if (drinkGoal == drinkMany) {
-            Text(
-                text = stringResource(R.string.bon_app_tit),
-                modifier.padding(top = 24.dp),
-                fontFamily = FontFamily.Cursive,
-                fontSize = 36.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSecondary,
-            )
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.bon_app_tit),
+                    modifier.padding(top = 24.dp, bottom = 12.dp),
+                    fontFamily = FontFamily.Cursive,
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                )
+                Button(
+                    onClick = { viewModel.drinkAgain() },
+                    modifier = modifier.padding(vertical = 24.dp),
+                    colors = ButtonDefaults.buttonColors(Color.Transparent),
+                ) {
+                    Text(
+                        text = "Go & Drink, again ?",
+                        modifier.padding(horizontal = 50.dp),
+                        fontFamily = FontFamily.Cursive,
+                        fontSize = 24.sp,
+                        color = Color.White,
+                    )
+                }
+            }
         }
     }
 }

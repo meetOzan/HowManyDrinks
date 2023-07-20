@@ -45,4 +45,11 @@ class DrinkViewModel : ViewModel() {
         _isNext.value = !_isNext.value
     }
 
+    fun drinkAgain() {
+        _isNext.value = true
+        _numberGoal.value = 0
+        _remainingNumber.value = 0
+        _number.value = 0
+    }
+
 }
