@@ -1,5 +1,13 @@
 package com.example.howmanydrinks.ui.screens
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,19 +31,22 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,7 +54,7 @@ import coil.compose.AsyncImage
 import com.example.howmanydrinks.data.Drink
 import com.example.howmanydrinks.ui.viewmodel.DrinkViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun SelectDrink(
     modifier: Modifier = Modifier,
@@ -78,7 +89,7 @@ fun SelectDrink(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Color.LightGray,Color.White))),
+            .background(Brush.verticalGradient(listOf(Color.LightGray, Color.White))),
         verticalArrangement = Arrangement.spacedBy(72.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -89,13 +100,23 @@ fun SelectDrink(
             fontFamily = FontFamily.Serif,
             textAlign = TextAlign.Center
         )
-        Text(
-            text = drinkName.name,
-            style = MaterialTheme.typography.displaySmall,
-            color = drinkName.color,
-            fontFamily = FontFamily.Cursive,
-            textAlign = TextAlign.Center
-        )
+        AnimatedVisibility(
+            visible = drinkName.name != "",
+            enter = slideInVertically(
+                tween(
+                    durationMillis = 150,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+        ) {
+            Text(
+                text = drinkName.name,
+                style = MaterialTheme.typography.displaySmall,
+                color = drinkName.color,
+                fontFamily = FontFamily.Cursive,
+                textAlign = TextAlign.Center
+            )
+        }
         LazyRow(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround,
@@ -142,7 +163,7 @@ fun SelectDrink(
                     .padding(horizontal = 24.dp)
                     .fillMaxWidth()
             ) {
-                androidx.compose.material3.IconButton(
+                IconButton(
                     onClick = { viewModel.reduceGoal() },
                     modifier = modifier.size(40.dp),
                     colors = IconButtonDefaults.iconButtonColors(Color(0xE4B596CA)),
@@ -152,25 +173,49 @@ fun SelectDrink(
                         imageVector = Icons.Filled.Remove, contentDescription = "minus"
                     )
                 }
-                Text(
-                    text = numberGoal.toString(),
-                    fontSize = 46.sp,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Serif
-                )
-                androidx.compose.material3.IconButton(
-                    onClick = { viewModel.increaseGoal() },
-                    colors = IconButtonDefaults.iconButtonColors(Color(0xE89F65C7)),
-                    modifier = modifier.size(40.dp),
-                    enabled = numberGoal < 10
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add, contentDescription = "plus"
-                    )
+
+                // Slide effect used in there
+
+                var oldCount by remember { mutableStateOf(numberGoal) }
+
+                SideEffect {
+                    oldCount = numberGoal
+                }
+
+                val countString = numberGoal.toString()
+                val oldCountString = oldCount.toString()
+                for (i in countString.indices) {
+                    val oldChar = oldCountString.getOrNull(i)
+                    val newChar = countString.get(i)
+                    val char = if (oldChar == newChar) oldCountString.get(i) else countString.get(i)
+                    AnimatedContent(
+                        targetState = char,
+                        transitionSpec = {
+                            slideInVertically { it } with slideOutVertically { -it }
+                        },
+                        label = ""
+                    ) {
+                        Text(
+                            text = numberGoal.toString(),
+                            fontSize = 46.sp,
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily.Serif
+                        )
+                    }
+                    IconButton(
+                        onClick = { viewModel.increaseGoal() },
+                        colors = IconButtonDefaults.iconButtonColors(Color(0xE89F65C7)),
+                        modifier = modifier.size(40.dp),
+                        enabled = numberGoal < 10
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Add, contentDescription = "plus"
+                        )
+                    }
                 }
             }
             ElevatedButton(
-                onClick =  onContinueClicked ,
+                onClick = onContinueClicked,
                 colors = ButtonDefaults.elevatedButtonColors(
                     Color.LightGray
                 ),
@@ -186,10 +231,4 @@ fun SelectDrink(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PrevSelectDrink() {
-    SelectDrink(onContinueClicked = {})
 }

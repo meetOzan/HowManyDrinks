@@ -49,6 +49,7 @@ class DrinkViewModel : ViewModel() {
     fun drinkAgain() {
         _isNext.value = true
         _numberGoal.value = 0
+        _drink.value = Drink("", Color.White, "", false)
         _remainingNumber.value = 0
         _number.value = 0
     }
