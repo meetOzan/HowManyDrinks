@@ -1,7 +1,8 @@
-package com.example.howmanydrinks
+package com.example.howmanydrinks.ui.viewmodel
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.example.howmanydrinks.data.Drink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

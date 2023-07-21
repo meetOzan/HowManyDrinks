@@ -1,4 +1,4 @@
-package com.example.howmanydrinks.screens
+package com.example.howmanydrinks.ui.screens
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.howmanydrinks.DrinkViewModel
+import com.example.howmanydrinks.ui.viewmodel.DrinkViewModel
 import com.example.howmanydrinks.R
 import com.example.howmanydrinks.ui.theme.HowManyDrinksTheme
 

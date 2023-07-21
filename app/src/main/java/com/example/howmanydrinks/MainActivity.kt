@@ -8,9 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.howmanydrinks.screens.CountScreen
-import com.example.howmanydrinks.screens.SelectDrink
+import com.example.howmanydrinks.ui.screens.CountScreen
+import com.example.howmanydrinks.ui.screens.SelectDrink
 import com.example.howmanydrinks.ui.theme.HowManyDrinksTheme
+import com.example.howmanydrinks.ui.viewmodel.DrinkViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

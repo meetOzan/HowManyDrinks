@@ -1,4 +1,4 @@
-package com.example.howmanydrinks
+package com.example.howmanydrinks.data
 
 import androidx.compose.ui.graphics.Color
 

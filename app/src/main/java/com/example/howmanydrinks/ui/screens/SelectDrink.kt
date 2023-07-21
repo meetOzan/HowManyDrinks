@@ -1,4 +1,4 @@
-package com.example.howmanydrinks.screens
+package com.example.howmanydrinks.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.example.howmanydrinks.Drink
-import com.example.howmanydrinks.DrinkViewModel
+import com.example.howmanydrinks.data.Drink
+import com.example.howmanydrinks.ui.viewmodel.DrinkViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
