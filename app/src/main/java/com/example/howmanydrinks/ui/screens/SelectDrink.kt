@@ -187,8 +187,8 @@ fun SelectDrink(
 
                 for (i in countString.indices) {
                     val oldChar = oldCountString.getOrNull(i)
-                    val newChar = countString.get(i)
-                    val char = if (oldChar == newChar) oldCountString.get(i) else countString.get(i)
+                    val newChar = countString[i]
+                    val char = if (oldChar == newChar) oldCountString[i] else countString.get(i)
                     AnimatedContent(
                         targetState = char,
                         transitionSpec = {
@@ -203,16 +203,17 @@ fun SelectDrink(
                             fontFamily = FontFamily.Serif
                         )
                     }
-                    IconButton(
-                        onClick = { viewModel.increaseGoal() },
-                        colors = IconButtonDefaults.iconButtonColors(Color(0xE89F65C7)),
-                        modifier = modifier.size(40.dp),
-                        enabled = numberGoal < 9
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Add, contentDescription = "plus"
-                        )
-                    }
+                }
+
+                IconButton(
+                    onClick = { viewModel.increaseGoal() },
+                    colors = IconButtonDefaults.iconButtonColors(Color(0xE89F65C7)),
+                    modifier = modifier.size(40.dp),
+                    enabled = numberGoal < 9
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add, contentDescription = "plus"
+                    )
                 }
 
             }
