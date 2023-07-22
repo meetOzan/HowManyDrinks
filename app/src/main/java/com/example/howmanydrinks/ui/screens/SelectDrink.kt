@@ -184,6 +184,7 @@ fun SelectDrink(
 
                 val countString = numberGoal.toString()
                 val oldCountString = oldCount.toString()
+
                 for (i in countString.indices) {
                     val oldChar = oldCountString.getOrNull(i)
                     val newChar = countString.get(i)
@@ -206,13 +207,14 @@ fun SelectDrink(
                         onClick = { viewModel.increaseGoal() },
                         colors = IconButtonDefaults.iconButtonColors(Color(0xE89F65C7)),
                         modifier = modifier.size(40.dp),
-                        enabled = numberGoal < 10
+                        enabled = numberGoal < 9
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Add, contentDescription = "plus"
                         )
                     }
                 }
+
             }
             ElevatedButton(
                 onClick = onContinueClicked,
