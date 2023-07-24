@@ -1,5 +1,5 @@
 # HowManyDrinks
-A simple drink counter app with Jetpack Compose with what I learned in start of Compose path.
+Simple drink counter app with Jetpack Compose with what I learned in start of Compose path.
 
 ## Project Features
  - Jetpack Compose
